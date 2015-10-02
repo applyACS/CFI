@@ -684,31 +684,44 @@ $(document).ready(function(){
 		email = $("input[name='email']").val();
 		tel = $("input[name='tel']").val();
 		persoane = $('.nr').find(":selected").val();
+		if (nume.length == 0){
+			eroare = true;
+		}
+		if (prenume.length == 0){
+			eroare = true;
+		}
+		if (loc == null || loc == ''){
+			eroare == true;
+		}
 
-		$.ajax({
-	        type: "POST",
-	        url: 'store',
-	        headers: {
-                'X-XSRF-TOKEN': $('.token').attr('value')
-            },
+		if (eroare){
+			alert('Numele, prenumele și localitatea sunt obligatorii!');
+		}else{
+			$.ajax({
+				type: "POST",
+				url: 'store',
+				headers: {
+					'X-XSRF-TOKEN': $('.token').attr('value')
+				},
 
-	        data:{	pers:persoane,
-		        	nume:nume,
-		        	prenume:prenume,
-		        	loc:loc,
-		        	email:email,
-		        	tel:tel},
-	        success: function(data) {
-	        	$('.text-success').removeClass('hidden');
-	        	$('.formular').find('*').not('.token').remove();
-	    		$('.nr').prop('selectedIndex', 0);
-	    		$('.submit').addClass('hidden');
-	        },
-	        error: function(){
-	        	$('.text-danger').removeClass('hidden');
-	        	//alert('ajax error!');
-	        }
-	    });
+				data:{	pers:persoane,
+						nume:nume,
+						prenume:prenume,
+						loc:loc,
+						email:email,
+						tel:tel},
+				success: function(data) {
+					$('.text-success').removeClass('hidden');
+					$('.formular').find('*').not('.token').remove();
+					$('.nr').prop('selectedIndex', 0);
+					$('.submit').addClass('hidden');
+				},
+				error: function(){
+					$('.text-danger').removeClass('hidden');
+					//alert('ajax error!');
+				}
+			});
+		}
 	});
 	$('.check').on('change', function(){
 		if (this.checked){
