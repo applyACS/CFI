@@ -1,0 +1,32 @@
+select{
+    background: yellow !important;
+    color:#FFF;
+    text-shadow:0 1px 0 rgba(0,0,0,0.4);
+}
+option:not(:checked) {
+    background-color: white;
+    color:#000;
+}
+.invalidare, .validare, .revalidare{
+	float:right;
+}
+.container{
+	padding-top: 60px;
+}
+
+.results tr[visible='false'],
+.no-result{
+  display:none;
+}
+
+.results tr[visible='true']{
+  display:table-row;
+}
+
+.counter{
+  padding:8px;
+  color:#ccc;
+}
+.table-responsive{
+	overflow-x: visible !important;
+}
