@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CfiInscris extends Migration
+class CreateCfisTable extends Migration
 {
     /**
      * Run the migrations.
