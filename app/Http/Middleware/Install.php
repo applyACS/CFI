@@ -13,7 +13,7 @@ class Install {
 	 */
     public function handle($request, Closure $next)
     {
-        if(\File::exists('config/invoicer.php')){
+        if(\File::exists('config/cfi.php')){
             return redirect('home');
         }
         return redirect('install');

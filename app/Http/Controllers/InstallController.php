@@ -51,52 +51,52 @@ class InstallController extends Controller {
         // Connect to the database
         try
         {
-//             $pdo = new \PDO("mysql:host=".$request->get('hostname'),$request->get('username'),$request->get('password'));
-//             //Create Database if not already created
-//             $pdo->exec("CREATE DATABASE IF NOT EXISTS ".$request->get('database'));
+            $pdo = new \PDO("mysql:host=".$request->get('hostname'),$request->get('username'),$request->get('password'));
+            //Create Database if not already created
+            $pdo->exec("CREATE DATABASE IF NOT EXISTS ".$request->get('database'));
 
-//             $options = [
-//                 'host'=>$request->get('hostname'),
-//                 'database'=>$request->get('database'),
-//                 'username'=>$request->get('username'),
-//                 'password'=>$request->get('password'),
-//                 ];
+            $options = [
+                'host'=>$request->get('hostname'),
+                'database'=>$request->get('database'),
+                'username'=>$request->get('username'),
+                'password'=>$request->get('password'),
+                ];
 
-//             $default = \Config::get("database.connections.mysql");
+            $default = \Config::get("database.connections.mysql");
 
-//             // Loop through our default array and update options if we have non-defaults
-//             foreach($default as $item => $value)
-//             {
-//                 $default[$item] = isset($options[$item]) ? $options[$item] : $default[$item];
-//             }
-//             // Set the temporary configuration
-//             \Config::set("database.connections.mysql", $default);
+            // Loop through our default array and update options if we have non-defaults
+            foreach($default as $item => $value)
+            {
+                $default[$item] = isset($options[$item]) ? $options[$item] : $default[$item];
+            }
+            // Set the temporary configuration
+            \Config::set("database.connections.mysql", $default);
 
-//             //Edit config database.php file and add new database details
-//             $template_path 	= base_path().'/config/database.sample.php';
+            //Edit config database.php file and add new database details
+            $template_path 	= base_path().'/config/database.sample.php';
 
-//             // Open the file
-//             $database_file = file_get_contents($template_path);
+            // Open the file
+            $database_file = file_get_contents($template_path);
 
-//             $new  = str_replace("%DB_HOST%",$request->get('hostname'),$database_file);
-//             $new  = str_replace("%DB_DATABASE%",$request->get('database'),$new);
-//             $new  = str_replace("%DB_USERNAME%",$request->get('username'),$new);
-//             $new  = str_replace("%DB_PASSWORD%",$request->get('password'),$new);
+            $new  = str_replace("%DB_HOST%",$request->get('hostname'),$database_file);
+            $new  = str_replace("%DB_DATABASE%",$request->get('database'),$new);
+            $new  = str_replace("%DB_USERNAME%",$request->get('username'),$new);
+            $new  = str_replace("%DB_PASSWORD%",$request->get('password'),$new);
 
-//             // Write the contents back to the file
-//             if(file_put_contents(base_path().'/config/database.php', $new)){
-//                 //Execute the database migrations using artisan
-//                 ini_set('max_execution_time', 90);
+            // Write the contents back to the file
+            if(file_put_contents(base_path().'/config/database.php', $new)){
+                //Execute the database migrations using artisan
+                ini_set('max_execution_time', 90);
 
-//                 \Artisan::call('migrate:install');
-//                 \Artisan::call('migrate', array('--force' => true));
-//             }
+                \Artisan::call('migrate:install');
+                \Artisan::call('migrate', array('--force' => true));
+            }
             //Create a install config file
             $config = "<?php return array('install' => true,
                                           'version' => 2,
                                           'install date' => '".date('Y-m-d H:i:s')."',
                                         );";
-            \File::put('../config/invoicer.php',$config);
+            \File::put('../config/cfi.php',$config);
             //Redirect to the next step
             return redirect('install/user');
         }
