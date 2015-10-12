@@ -21,11 +21,20 @@ Route::controllers([
 'password' => 'Auth\PasswordController',
 ]);
 
+Route::group(array('prefix'=>'install','before'=>'install'),function()
+{
+    Route::get('/','InstallController@index');
+    Route::get('/database','InstallController@getDatabase');
+    Route::post('/database','InstallController@postDatabase');
+    Route::get('/user','InstallController@getUser');
+    Route::post('/user','InstallController@postUser');
+});
+
 
 Route::get('login', 'Auth\AuthController@login');
 Route::get('register', 'Auth\AuthController@register');
 
-Route::get('/', 'cfiController@show');
+Route::get('/', ['middleware' => 'install'], 'cfiController@show');
 Route::get('home', 'cfiController@show');
 Route::get('create', 'cfiController@create');
 Route::get('plata', ['middleware' => 'auth', 'uses' => 'cfiController@plata']);
