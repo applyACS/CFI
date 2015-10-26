@@ -93,7 +93,7 @@ class InstallController extends Controller {
             }
             //Create a install config file
             $config = "<?php return array('install' => true,
-                                          'version' => 2,
+                                          'version' => 1,
                                           'install date' => '".date('Y-m-d H:i:s')."',
                                         );";
             \File::put('../config/cfi.php',$config);
