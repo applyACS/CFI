@@ -2,7 +2,7 @@
 
 @section('content')
 <h2 class="text-success hidden">Persoanele au fost înregistrate!</h2>
-<h2 class="text-danger hidden">Oups! A apărut o eroare!</h2>
+<h2 class="text-danger hidden">Oups! Toate câmpurile sunt obligatorii!</h2>
 	<div><label for="pers">Numărul de persoane:</label>
 		<select class="form-control nr" id="pers">
 			<option value="">Selectaţi numărul de persoane</option>

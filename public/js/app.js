@@ -674,6 +674,7 @@ $(document).ready(function(){
 		var nume = [];
 		var prenume = [];
 		var loc, email, tel;
+		var eroare = false;
 		$("input[name^='nume']").each(function(){
 			nume.push($(this).val());
 		});
