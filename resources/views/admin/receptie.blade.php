@@ -36,7 +36,7 @@
 	    </tr>
     </thead>
 	    @foreach ($all as $al)
-	    @if ($al->receptie == 0)
+	    @if ($al->validare_plata == 1)
 		    <tr  class="success" >
 		    	<th><input type="checkbox" data-id="{{ $al->id }}"/></th>
 		    	<th>{{ $al->id }}</th>
