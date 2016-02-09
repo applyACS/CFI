@@ -24,9 +24,10 @@ class cfiRequest extends Request
     public function rules()
     {
         return [
-	        'nume' => 'required|min:3',
-	        'prenume' => 'required|min:3',
+	        'nume' => 'required',
+	        'prenume' => 'required',
 	        'loc' => 'required',
+            'email' => 'required|email',
 	        'telefon' => 'required|tel'
         ];
     }

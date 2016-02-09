@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Cfi;
-use App\Request\cfiRequest;
+use App\Http\Requests\cfiRequest;
 use Response;
 
 class cfiController extends Controller
@@ -38,14 +38,14 @@ class cfiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(cfiRequest $request)
     {
-        $pers = $_POST['pers'];
-        $nume = $_POST['nume'];
-        $prenume = $_POST['prenume'];
-        $loc = $_POST['loc'];
-        $email = $_POST['email'];
-        $tel = $_POST['tel'];
+        $pers = $request['pers'];
+        $nume = $request['nume'];
+        $prenume = $request['prenume'];
+        $loc = $request['loc'];
+        $email = $request['email'];
+        $tel = $request['tel'];
         //$i = 0;
         for ($i=0; $i<$pers; $i++){
         	$cfi = new Cfi;
@@ -60,7 +60,7 @@ class cfiController extends Controller
         		'status' => 'success',
         		'msg' => $pers,
         );
-        return $cfi;  // <<<<<<<<< see this line
+        return $cfi;
 
     }
 
