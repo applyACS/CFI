@@ -11,20 +11,20 @@
 
 namespace Symfony\Component\VarDumper\Tests\Caster;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\VarDumper\Caster\PdoCaster;
 use Symfony\Component\VarDumper\Cloner\Stub;
 
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class PdoCasterTest extends \PHPUnit_Framework_TestCase
+class PdoCasterTest extends TestCase
 {
+    /**
+     * @requires extension pdo_sqlite
+     */
     public function testCastPdo()
     {
-        if (!extension_loaded('pdo_sqlite')) {
-            $this->markTestSkipped('pdo_sqlite extension is required');
-        }
-
         $pdo = new \PDO('sqlite::memory:');
         $pdo->setAttribute(\PDO::ATTR_STATEMENT_CLASS, array('PDOStatement', array($pdo)));
 

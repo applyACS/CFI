@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Debug\Tests\Exception;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -27,7 +28,7 @@ use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\Exception\UnsupportedMediaTypeHttpException;
 
-class FlattenExceptionTest extends \PHPUnit_Framework_TestCase
+class FlattenExceptionTest extends TestCase
 {
     public function testStatusCode()
     {
@@ -129,6 +130,20 @@ class FlattenExceptionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($flattened2, $flattened->getPrevious());
 
         $this->assertSame(array($flattened2), $flattened->getAllPrevious());
+    }
+
+    /**
+     * @requires PHP 7.0
+     */
+    public function testPreviousError()
+    {
+        $exception = new \Exception('test', 123, new \ParseError('Oh noes!', 42));
+
+        $flattened = FlattenException::create($exception)->getPrevious();
+
+        $this->assertEquals($flattened->getMessage(), 'Parse error: Oh noes!', 'The message is copied from the original exception.');
+        $this->assertEquals($flattened->getCode(), 42, 'The code is copied from the original exception.');
+        $this->assertEquals($flattened->getClass(), 'Symfony\Component\Debug\Exception\FatalThrowableError', 'The class is set to the class of the original exception');
     }
 
     /**

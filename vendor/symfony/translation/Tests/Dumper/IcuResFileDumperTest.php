@@ -11,17 +11,17 @@
 
 namespace Symfony\Component\Translation\Tests\Dumper;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Translation\MessageCatalogue;
 use Symfony\Component\Translation\Dumper\IcuResFileDumper;
 
-class IcuResFileDumperTest extends \PHPUnit_Framework_TestCase
+class IcuResFileDumperTest extends TestCase
 {
+    /**
+     * @requires extension mbstring
+     */
     public function testDump()
     {
-        if (!function_exists('mb_convert_encoding')) {
-            $this->markTestSkipped('This test requires mbstring to work.');
-        }
-
         $catalogue = new MessageCatalogue('en');
         $catalogue->add(array('foo' => 'bar'));
 

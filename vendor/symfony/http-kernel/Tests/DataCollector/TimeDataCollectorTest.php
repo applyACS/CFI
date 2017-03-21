@@ -11,11 +11,15 @@
 
 namespace Symfony\Component\HttpKernel\Tests\DataCollector;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\DataCollector\TimeDataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TimeDataCollectorTest extends \PHPUnit_Framework_TestCase
+/**
+ * @group time-sensitive
+ */
+class TimeDataCollectorTest extends TestCase
 {
     public function testCollect()
     {
@@ -38,7 +42,7 @@ class TimeDataCollectorTest extends \PHPUnit_Framework_TestCase
         $c->collect($request, new Response());
         $this->assertEquals(0, $c->getStartTime());
 
-        $kernel = $this->getMock('Symfony\Component\HttpKernel\KernelInterface');
+        $kernel = $this->getMockBuilder('Symfony\Component\HttpKernel\KernelInterface')->getMock();
         $kernel->expects($this->once())->method('getStartTime')->will($this->returnValue(123456));
 
         $c = new TimeDataCollector($kernel);

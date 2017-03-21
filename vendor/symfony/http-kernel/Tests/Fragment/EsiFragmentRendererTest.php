@@ -11,20 +11,15 @@
 
 namespace Symfony\Component\HttpKernel\Tests\Fragment;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 use Symfony\Component\HttpKernel\Fragment\EsiFragmentRenderer;
 use Symfony\Component\HttpKernel\HttpCache\Esi;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\UriSigner;
 
-class EsiFragmentRendererTest extends \PHPUnit_Framework_TestCase
+class EsiFragmentRendererTest extends TestCase
 {
-    public function testRenderFallbackToInlineStrategyIfNoRequest()
-    {
-        $strategy = new EsiFragmentRenderer(new Esi(), $this->getInlineStrategy(true));
-        $strategy->render('/', Request::create('/'));
-    }
-
     public function testRenderFallbackToInlineStrategyIfEsiNotSupported()
     {
         $strategy = new EsiFragmentRenderer(new Esi(), $this->getInlineStrategy(true));

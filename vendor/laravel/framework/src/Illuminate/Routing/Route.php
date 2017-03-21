@@ -160,6 +160,8 @@ class Route
      *
      * @param  \Illuminate\Http\Request  $request
      * @return mixed
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     protected function runController(Request $request)
     {
@@ -259,7 +261,7 @@ class Route
      * Get or set the middlewares attached to the route.
      *
      * @param  array|string|null $middleware
-     * @return array
+     * @return $this|array
      */
     public function middleware($middleware = null)
     {
@@ -272,7 +274,7 @@ class Route
         }
 
         $this->action['middleware'] = array_merge(
-            Arr::get($this->action, 'middleware', []), $middleware
+            (array) Arr::get($this->action, 'middleware', []), $middleware
         );
 
         return $this;
@@ -454,14 +456,13 @@ class Route
      *
      * @return array
      *
-     * @throws LogicException
+     * @throws \LogicException
      */
     public function parameters()
     {
         if (isset($this->parameters)) {
             return array_map(function ($value) {
                 return is_string($value) ? rawurldecode($value) : $value;
-
             }, $this->parameters);
         }
 
@@ -475,7 +476,9 @@ class Route
      */
     public function parametersWithoutNulls()
     {
-        return array_filter($this->parameters(), function ($p) { return ! is_null($p); });
+        return array_filter($this->parameters(), function ($p) {
+            return ! is_null($p);
+        });
     }
 
     /**
@@ -501,7 +504,9 @@ class Route
     {
         preg_match_all('/\{(.*?)\}/', $this->domain().$this->uri, $matches);
 
-        return array_map(function ($m) { return trim($m, '?'); }, $matches[1]);
+        return array_map(function ($m) {
+            return trim($m, '?');
+        }, $matches[1]);
     }
 
     /**
@@ -604,6 +609,12 @@ class Route
     {
         foreach ($parameters as $key => &$value) {
             $value = isset($value) ? $value : Arr::get($this->defaults, $key);
+        }
+
+        foreach ($this->defaults as $key => $value) {
+            if (! isset($parameters[$key])) {
+                $parameters[$key] = $value;
+            }
         }
 
         return $parameters;
@@ -921,8 +932,7 @@ class Route
     /**
      * Add or change the route name.
      *
-     * @param $name
-     *
+     * @param  string  $name
      * @return $this
      */
     public function name($name)
@@ -993,7 +1003,7 @@ class Route
      *
      * @return void
      *
-     * @throws LogicException
+     * @throws \LogicException
      */
     public function prepareForSerialization()
     {

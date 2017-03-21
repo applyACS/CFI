@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\HttpFoundation\Tests\Session;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
@@ -23,7 +24,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
  * @author Robert Schönthal <seroscho@googlemail.com>
  * @author Drak <drak@zikula.org>
  */
-class SessionTest extends \PHPUnit_Framework_TestCase
+class SessionTest extends TestCase
 {
     /**
      * @var \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
@@ -190,9 +191,6 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface', $this->session->getFlashBag());
     }
 
-    /**
-     * @covers Symfony\Component\HttpFoundation\Session\Session::getIterator
-     */
     public function testGetIterator()
     {
         $attributes = array('hello' => 'world', 'symfony' => 'rocks');
@@ -209,9 +207,6 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(count($attributes), $i);
     }
 
-    /**
-     * @covers \Symfony\Component\HttpFoundation\Session\Session::count
-     */
     public function testGetCount()
     {
         $this->session->set('hello', 'world');

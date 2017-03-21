@@ -11,11 +11,12 @@
 
 namespace Symfony\Component\EventDispatcher\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-abstract class AbstractEventDispatcherTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractEventDispatcherTest extends TestCase
 {
     /* Some pseudo events */
     const preFoo = 'pre.foo';
@@ -108,6 +109,20 @@ abstract class AbstractEventDispatcherTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $this->dispatcher->getListeners());
     }
 
+    public function testGetListenerPriority()
+    {
+        $listener1 = new TestEventListener();
+        $listener2 = new TestEventListener();
+
+        $this->dispatcher->addListener('pre.foo', $listener1, -10);
+        $this->dispatcher->addListener('pre.foo', $listener2);
+
+        $this->assertSame(-10, $this->dispatcher->getListenerPriority('pre.foo', $listener1));
+        $this->assertSame(0, $this->dispatcher->getListenerPriority('pre.foo', $listener2));
+        $this->assertNull($this->dispatcher->getListenerPriority('pre.bar', $listener2));
+        $this->assertNull($this->dispatcher->getListenerPriority('pre.foo', function () {}));
+    }
+
     public function testDispatch()
     {
         $this->dispatcher->addListener('pre.foo', array($this->listener, 'preFoo'));
@@ -128,7 +143,7 @@ abstract class AbstractEventDispatcherTest extends \PHPUnit_Framework_TestCase
     public function testLegacyDispatch()
     {
         $event = new Event();
-        $return = $this->dispatcher->dispatch(self::preFoo, $event);
+        $this->dispatcher->dispatch(self::preFoo, $event);
         $this->assertEquals('pre.foo', $event->getName());
     }
 

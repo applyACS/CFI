@@ -26,7 +26,8 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  *
- * @api
+ * @method Request|null getRequest() A Request instance
+ * @method Response|null getResponse() A Response instance
  */
 class Client extends BaseClient
 {
@@ -47,26 +48,6 @@ class Client extends BaseClient
         $this->followRedirects = false;
 
         parent::__construct($server, $history, $cookieJar);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @return Request|null A Request instance
-     */
-    public function getRequest()
-    {
-        return parent::getRequest();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @return Response|null A Response instance
-     */
-    public function getResponse()
-    {
-        return parent::getResponse();
     }
 
     /**
@@ -107,7 +88,7 @@ class Client extends BaseClient
         $code = <<<EOF
 <?php
 
-error_reporting($errorReporting & ~E_USER_DEPRECATED);
+error_reporting($errorReporting);
 
 require_once '$requirePath';
 

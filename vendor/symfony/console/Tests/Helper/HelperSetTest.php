@@ -11,14 +11,12 @@
 
 namespace Symfony\Component\Console\Tests\Helper;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Command\Command;
 
-class HelperSetTest extends \PHPUnit_Framework_TestCase
+class HelperSetTest extends TestCase
 {
-    /**
-     * @covers \Symfony\Component\Console\Helper\HelperSet::__construct
-     */
     public function testConstructor()
     {
         $mock_helper = $this->getGenericMockHelper('fake_helper');
@@ -28,9 +26,6 @@ class HelperSetTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($helperset->has('fake_helper_alias'), '__construct sets helper alias for given helper');
     }
 
-    /**
-     * @covers \Symfony\Component\Console\Helper\HelperSet::set
-     */
     public function testSet()
     {
         $helperset = new HelperSet();
@@ -49,9 +44,6 @@ class HelperSetTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($helperset->has('fake_helper_alias'), '->set() adds helper alias when set');
     }
 
-    /**
-     * @covers \Symfony\Component\Console\Helper\HelperSet::has
-     */
     public function testHas()
     {
         $helperset = new HelperSet(array('fake_helper_alias' => $this->getGenericMockHelper('fake_helper')));
@@ -59,9 +51,6 @@ class HelperSetTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($helperset->has('fake_helper_alias'), '->has() finds set helper by alias');
     }
 
-    /**
-     * @covers \Symfony\Component\Console\Helper\HelperSet::get
-     */
     public function testGet()
     {
         $helper_01 = $this->getGenericMockHelper('fake_helper_01');
@@ -82,9 +71,6 @@ class HelperSetTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * @covers \Symfony\Component\Console\Helper\HelperSet::setCommand
-     */
     public function testSetCommand()
     {
         $cmd_01 = new Command('foo');
@@ -100,9 +86,6 @@ class HelperSetTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($cmd_02, $helperset->getCommand(), '->setCommand() overwrites stored command with consecutive calls');
     }
 
-    /**
-     * @covers \Symfony\Component\Console\Helper\HelperSet::getCommand
-     */
     public function testGetCommand()
     {
         $cmd = new Command('foo');
@@ -111,9 +94,6 @@ class HelperSetTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($cmd, $helperset->getCommand(), '->getCommand() retrieves stored command');
     }
 
-    /**
-     * @covers \Symfony\Component\Console\Helper\HelperSet::getIterator
-     */
     public function testIteration()
     {
         $helperset = new HelperSet();
@@ -128,16 +108,9 @@ class HelperSetTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * Create a generic mock for the helper interface. Optionally check for a call to setHelperSet with a specific
-     * helperset instance.
-     *
-     * @param string    $name
-     * @param HelperSet $helperset allows a mock to verify a particular helperset set is being added to the Helper
-     */
     private function getGenericMockHelper($name, HelperSet $helperset = null)
     {
-        $mock_helper = $this->getMock('\Symfony\Component\Console\Helper\HelperInterface');
+        $mock_helper = $this->getMockBuilder('\Symfony\Component\Console\Helper\HelperInterface')->getMock();
         $mock_helper->expects($this->any())
             ->method('getName')
             ->will($this->returnValue($name));

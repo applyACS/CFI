@@ -11,11 +11,12 @@
 
 namespace Symfony\Component\Routing\Tests\Matcher\Dumper;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Matcher\Dumper\PhpMatcherDumper;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
-class PhpMatcherDumperTest extends \PHPUnit_Framework_TestCase
+class PhpMatcherDumperTest extends TestCase
 {
     /**
      * @expectedException \LogicException
@@ -185,8 +186,6 @@ class PhpMatcherDumperTest extends \PHPUnit_Framework_TestCase
 
         $route1 = new Route('/route1', array(), array(), array(), 'a.example.com');
         $collection1->add('route1', $route1);
-
-        $collection2 = new RouteCollection();
 
         $route2 = new Route('/c2/route2', array(), array(), array(), 'a.example.com');
         $collection1->add('route2', $route2);

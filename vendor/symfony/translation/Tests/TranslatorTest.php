@@ -11,12 +11,13 @@
 
 namespace Symfony\Component\Translation\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Translation\MessageCatalogue;
 
-class TranslatorTest extends \PHPUnit_Framework_TestCase
+class TranslatorTest extends TestCase
 {
     /**
      * @dataProvider      getInvalidLocalesTests
@@ -271,6 +272,36 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
         $translator->addResource('array', array('foo' => 'foofoo'), 'en');
 
         $translator->trans('foo');
+    }
+
+    public function testNestedFallbackCatalogueWhenUsingMultipleLocales()
+    {
+        $translator = new Translator('fr');
+        $translator->setFallbackLocales(array('ru', 'en'));
+
+        $translator->getCatalogue('fr');
+
+        $this->assertNotNull($translator->getCatalogue('ru')->getFallbackCatalogue());
+    }
+
+    public function testFallbackCatalogueResources()
+    {
+        $translator = new Translator('en_GB', new MessageSelector());
+        $translator->addLoader('yml', new \Symfony\Component\Translation\Loader\YamlFileLoader());
+        $translator->addResource('yml', __DIR__.'/fixtures/empty.yml', 'en_GB');
+        $translator->addResource('yml', __DIR__.'/fixtures/resources.yml', 'en');
+
+        // force catalogue loading
+        $this->assertEquals('bar', $translator->trans('foo', array()));
+
+        $resources = $translator->getCatalogue('en')->getResources();
+        $this->assertCount(1, $resources);
+        $this->assertContains(__DIR__.DIRECTORY_SEPARATOR.'fixtures'.DIRECTORY_SEPARATOR.'resources.yml', $resources);
+
+        $resources = $translator->getCatalogue('en_GB')->getResources();
+        $this->assertCount(2, $resources);
+        $this->assertContains(__DIR__.DIRECTORY_SEPARATOR.'fixtures'.DIRECTORY_SEPARATOR.'empty.yml', $resources);
+        $this->assertContains(__DIR__.DIRECTORY_SEPARATOR.'fixtures'.DIRECTORY_SEPARATOR.'resources.yml', $resources);
     }
 
     /**

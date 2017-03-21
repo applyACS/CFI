@@ -11,13 +11,14 @@
 
 namespace Symfony\Component\HttpKernel\Tests\Profiler;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector;
-use Symfony\Component\HttpKernel\Profiler\SqliteProfilerStorage;
+use Symfony\Component\HttpKernel\Profiler\FileProfilerStorage;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProfilerTest extends \PHPUnit_Framework_TestCase
+class ProfilerTest extends TestCase
 {
     private $tmp;
     private $storage;
@@ -61,16 +62,12 @@ class ProfilerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        if (!class_exists('SQLite3') && (!class_exists('PDO') || !in_array('sqlite', \PDO::getAvailableDrivers()))) {
-            $this->markTestSkipped('This test requires SQLite support in your environment');
-        }
-
         $this->tmp = tempnam(sys_get_temp_dir(), 'sf2_profiler');
         if (file_exists($this->tmp)) {
             @unlink($this->tmp);
         }
 
-        $this->storage = new SqliteProfilerStorage('sqlite:'.$this->tmp);
+        $this->storage = new FileProfilerStorage('file:'.$this->tmp);
         $this->storage->purge();
     }
 
