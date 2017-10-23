@@ -93,10 +93,10 @@ class InstallController extends Controller {
             }
             //Create a install config file
             $config = "<?php return array('install' => true,
-                                          'version' => 1,
+                                          'version' => 2,
                                           'install date' => '".date('Y-m-d H:i:s')."',
                                         );";
-            \File::put('../config/cfi.php',$config);
+            \File::put(base_path().'/config/invoicer.php',$config);
             //Redirect to the next step
             return redirect('install/user');
         }

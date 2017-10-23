@@ -1,4 +1,8 @@
 $(document).ready(function(){
+    if (window.location.hash != null && window.location.hash != '') 
+        $('body').animate({
+            scrollTop: $(window.location.hash).offset().top
+        }, 2500);
 	$('.nr').on('change', function(){
 
 		switch ($(this).find(":selected").val()){
@@ -24,11 +28,11 @@ $(document).ready(function(){
 						+'<input class="form-control" type="text" name="loc">'
 						+'</div>'
 						+'<div class="form-group">'
-						+'<label for="email">Email</label>'
+						+'<label for="email">Biserica</label>'
 						+'<input class="form-control" type="email" name="email">'
 						+'</div>'
 						+'<div class="form-group">'
-						+'<label for="tel">Telefon</label>'
+						+'<label for="tel">Avans</label>'
 						+'<input class="form-control" type="tel" name="tel">'
 						+'</div>'
 						//
@@ -55,11 +59,16 @@ $(document).ready(function(){
 /**
  * Inscriere
  */
+ function isValidEmailAddress(emailAddress) {
+    var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+    return pattern.test(emailAddress);
+};
 	$('.submit').on('click', function(){
 		var nume = [];
 		var prenume = [];
 		var loc, email, tel;
 		var eroare = false;
+		
 		$("input[name^='nume']").each(function(){
 			nume.push($(this).val());
 		});
@@ -70,6 +79,18 @@ $(document).ready(function(){
 		email = $("input[name='email']").val();
 		tel = $("input[name='tel']").val();
 		persoane = $('.nr').find(":selected").val();
+		if (nume.length == 0){
+			eroare = true;
+		}
+		if (prenume.length == 0){
+			eroare = true;
+		}
+		if (loc == null || loc == ''){
+			eroare = true;
+		}
+		if(eroare){
+			$('.text-danger').removeClass('hidden');
+		}else{
 
 			$.ajax({
 				type: "POST",
@@ -85,17 +106,21 @@ $(document).ready(function(){
 						email:email,
 						tel:tel},
 				success: function(data) {
-                    $('.text-danger').addClass('hidden');
 					$('.text-success').removeClass('hidden');
 					$('.formular').find('*').not('.token').remove();
 					$('.nr').prop('selectedIndex', 0);
 					$('.submit').addClass('hidden');
+					setTimeout(function() {
+						  window.location.href = "http://cfi.flacarainchinarii.ro/#scrollDown";
+						}, 4000);
+					//location.href = "http://cfi.flacarainchinarii.ro/";
 				},
 				error: function(){
 					$('.text-danger').removeClass('hidden');
+					//alert('ajax error!');
 				}
 			});
-		
+		}
 	});
 	$('.check').on('change', function(){
 		if (this.checked){

@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Http\Requests\cfiRequest;
 use App\Http\Controllers\Controller;
 use App\Cfi;
-use App\Http\Requests\cfiRequest;
 use Response;
 
 class cfiController extends Controller
@@ -18,7 +18,9 @@ class cfiController extends Controller
      */
     public function index()
     {
-        return view('cfi.index');
+        $all = Cfi::where('receptie','=','1')->get();
+        //return $all;
+        return view('admin.sala', compact('all'));
     }
 
     /**
@@ -52,15 +54,15 @@ class cfiController extends Controller
         	$cfi->nume = $nume[$i];
         	$cfi->prenume = $prenume[$i];
         	$cfi->localitatea = $loc;
-        	$cfi->email = $email;
-        	$cfi->telefon = $tel;
+        	$cfi->biserica = $email;
+        	$cfi->avans = $tel;
         	$cfi->save();
         }
         $response = array(
         		'status' => 'success',
         		'msg' => $pers,
         );
-        return $cfi;
+        return $cfi;  // <<<<<<<<< see this line
 
     }
 
@@ -118,7 +120,7 @@ class cfiController extends Controller
     public function plata()
     {
     	$xsrfToken = app('Illuminate\Encryption\Encrypter')->encrypt(csrf_token());
-    	$all = Cfi::all();
+    	$all = Cfi::where('validare_plata', '=', 0)->get();
     	return view('admin.plata', compact('all'))->with('xsrf_token', $xsrfToken);
     }
 
@@ -150,7 +152,7 @@ class cfiController extends Controller
     public function receptie()
     {
     	$xsrfToken = app('Illuminate\Encryption\Encrypter')->encrypt(csrf_token());
-    	$all = Cfi::all();
+    	$all = Cfi::where('validare_plata', '=', 1)->where('receptie', 0)->get();
     	return view('admin.receptie', compact('all'))->with('xsrf_token', $xsrfToken);
     }
     public function updateReceptie()

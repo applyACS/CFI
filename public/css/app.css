@@ -30,3 +30,11 @@ option:not(:checked) {
 .table-responsive{
 	overflow-x: visible !important;
 }
+body{
+
+    background-position: center;
+    background-repeat: repeat-y;
+}
+.table-responsive{
+	background-color: rgba(255, 255, 255, 0.9);
+}

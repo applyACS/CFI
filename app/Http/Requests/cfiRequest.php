@@ -27,8 +27,7 @@ class cfiRequest extends Request
 	        'nume' => 'required',
 	        'prenume' => 'required',
 	        'loc' => 'required',
-            'email' => 'required|email',
-	        'telefon' => 'required|tel'
+        	'email' => 'required|'
         ];
     }
 }
