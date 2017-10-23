@@ -31,8 +31,8 @@
             <th data-field="nume">Nume</th>
             <th data-field="prenume">Prenume</th>
             <th data-field="loc">Localitate</th>
-            <th data-field="email">Biserica</th>
-            <th data-field="tel">Avans</th>
+            <th data-field="email">Email</th>
+            <th data-field="tel">Telefon</th>
         </tr>
         <tr class="warning no-result">
 	      <td colspan="4"><i class="fa fa-warning"></i> No result</td>
@@ -45,8 +45,8 @@
 		         <th>{{ $al->nume }}</th>
 		         <th>{{ $al->prenume }}</th>
 		         <th>{{ $al->localitatea }}</th>
-		         <th>{{ $al->biserica }}</th>
-		         <th>{{ $al->avans }}</th>
+		         <th>{{ $al->email }}</th>
+		         <th>{{ $al->telefon }}</th>
 		    </tr>
 	    @endforeach
 	</table>
