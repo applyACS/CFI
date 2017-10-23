@@ -50,7 +50,7 @@
 
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
-						<!--<li><a href="/create">Înscrie-te</a></li>-->
+						<li><a href="/create">Înscrie-te</a></li>
 						<li><a href="/login">Login</a></li>
 						<!-- <li><a href="/register">Register</a></li> -->
 					@else

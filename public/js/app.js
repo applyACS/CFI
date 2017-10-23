@@ -16,23 +16,23 @@ $(document).ready(function(){
 				$('.formular').find('*').not('.token').remove();
 				$('.formular').append('<div class="form-group">'
 						+'<input name="_token" type="hidden" value="{{ csrf_token() }}" />'
-						+'<label for="nume">Nume</label>'
-						+'<input class="form-control" type="text" name="nume">'
+						+'<label for="nume">Nume *</label>'
+						+'<input class="form-control" type="text" name="nume" required>'
 						+'</div>'
 						+'<div class="form-group">'
-						+'<label for="prenume">Prenume</label>'
-						+'<input class="form-control" type="text" name="prenume">'
+						+'<label for="prenume">Prenume *</label>'
+						+'<input class="form-control" type="text" name="prenume" required>'
 						+'</div>'
 						+'<div class="form-group">'
-						+'<label for="loc">Localitate</label>'
-						+'<input class="form-control" type="text" name="loc">'
+						+'<label for="loc">Localitate *</label>'
+						+'<input class="form-control" type="text" name="loc" required>'
 						+'</div>'
 						+'<div class="form-group">'
-						+'<label for="email">Biserica</label>'
-						+'<input class="form-control" type="email" name="email">'
+						+'<label for="email">Email *</label>'
+						+'<input class="form-control is-invalid" type="email" name="email" required>'
 						+'</div>'
 						+'<div class="form-group">'
-						+'<label for="tel">Avans</label>'
+						+'<label for="tel">Telefon</label>'
 						+'<input class="form-control" type="tel" name="tel">'
 						+'</div>'
 						//
@@ -63,7 +63,11 @@ $(document).ready(function(){
     var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
     return pattern.test(emailAddress);
 };
+
 	$('.submit').on('click', function(){
+		$("input[name='loc']").removeClass('invalid');
+		$("input[name='email']").removeClass('invalid');
+
 		var nume = [];
 		var prenume = [];
 		var loc, email, tel;
@@ -86,6 +90,11 @@ $(document).ready(function(){
 			eroare = true;
 		}
 		if (loc == null || loc == ''){
+			$("input[name='loc']").addClass('invalid');
+			eroare = true;
+		}
+		if(!isValidEmailAddress(email)){
+			$("input[name='email']").addClass('invalid');
 			eroare = true;
 		}
 		if(eroare){

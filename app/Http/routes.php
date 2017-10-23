@@ -36,7 +36,7 @@ Route::get('register', 'Auth\AuthController@register');
 
 Route::get('/', 'cfiController@show');
 Route::get('home', 'cfiController@show');
-Route::get('create', ['middleware' => 'auth', 'uses' => 'cfiController@create']);
+Route::get('create', ['uses' => 'cfiController@create']);
 Route::get('plata', ['middleware' => 'auth', 'uses' => 'cfiController@plata']);
 Route::get('receptie', ['middleware' => 'auth', 'uses' => 'cfiController@receptie']);
 Route::get('sala', ['middleware' => 'auth', 'uses' => 'cfiController@index']);

@@ -38,7 +38,7 @@
 		</select>
 	</div>
 	<div class="forma">
-		<form class="formular" role="form" type="submit">
+		<form class="formular was-validated" id="needs-validation" role="form" type="submit">
 		<input name="_token" class="token" type="hidden" value="{{ $xsrf_token }}" />
 
 		</form>
