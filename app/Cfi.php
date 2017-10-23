@@ -10,7 +10,7 @@ class Cfi extends Model
 	'nume',
 	'prenume',
 	'localitatea',
-	'email',
-	'telefon'
+	'biserica',
+	'avans'
 	];
 }

@@ -21,27 +21,27 @@ Route::controllers([
 'password' => 'Auth\PasswordController',
 ]);
 
-Route::group(array('prefix'=>'install','before'=>'install'),function()
-{
-    Route::get('/','InstallController@index');
-    Route::get('/database','InstallController@getDatabase');
-    Route::post('/database','InstallController@postDatabase');
-    Route::get('/user','InstallController@getUser');
-    Route::post('/user','InstallController@postUser');
-});
+// Route::group(array('prefix'=>'install','before'=>'install'),function()
+// {
+//     Route::get('/','InstallController@index');
+//     Route::get('/database','InstallController@getDatabase');
+//     Route::post('/database','InstallController@postDatabase');
+//     Route::get('/user','InstallController@getUser');
+//     Route::post('/user','InstallController@postUser');
+// });
 
 
 Route::get('login', 'Auth\AuthController@login');
 Route::get('register', 'Auth\AuthController@register');
 
-Route::get('/', ['middleware' => 'install'], 'cfiController@show');
+Route::get('/', 'cfiController@show');
 Route::get('home', 'cfiController@show');
-Route::get('create', 'cfiController@create');
+Route::get('create', ['middleware' => 'auth', 'uses' => 'cfiController@create']);
 Route::get('plata', ['middleware' => 'auth', 'uses' => 'cfiController@plata']);
 Route::get('receptie', ['middleware' => 'auth', 'uses' => 'cfiController@receptie']);
+Route::get('sala', ['middleware' => 'auth', 'uses' => 'cfiController@index']);
 
-Route::post('store', 'cfiController@store');
+Route::any('store', 'cfiController@store');
 Route::post('updateplata', ['middleware' => 'auth', 'uses' => 'cfiController@updatePlata']);
 Route::post('updateinplata', ['middleware' => 'auth', 'uses' => 'cfiController@updateInPlata']);
 Route::post('updatereceptie', ['middleware' => 'auth', 'uses' => 'cfiController@updateReceptie']);
-

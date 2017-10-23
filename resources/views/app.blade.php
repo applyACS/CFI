@@ -6,12 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>CFI</title>
 
-	<link href="/css/app.css" rel="stylesheet">
+	<link href="../css/app.css" rel="stylesheet">
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
 	<!-- Optional theme -->
-	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 
 	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -24,9 +24,10 @@
 	<![endif]-->
 	<!-- Scripts -->
 
-	<script type="text/javascript" src="/js/jquery/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
-	<script src="/js/app.js" type="text/javascript"></script>
+	<script type="text/javascript" src="../js/jquery/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+	<script src="../js/app.js" type="text/javascript"></script>
+	<script src="../js/validator.min.js" type="text/javascript"></script>
 </head>
 <body>
 
@@ -49,10 +50,12 @@
 
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
-						<li><a href="/create">Înscrie-te</a></li>
+						<!--<li><a href="/create">Înscrie-te</a></li>-->
 						<li><a href="/login">Login</a></li>
 						<!-- <li><a href="/register">Register</a></li> -->
 					@else
+						<li><a href="/sala">Sala</a></li>
+						<li><a href="/create">Înscrie-te</a></li>
 						<li><a href="/receptie">Receptie</a></li>
 						<li><a href="/plata">Validare plată</a></li>
 						<li class="dropdown">
